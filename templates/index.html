@@ -26,24 +26,29 @@
       href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
       * {
-        font-family: "Gowun Dodum", sans-serif;
+        font-family: "Jua", "Gowun Dodum", sans-serif;
       }
 
       .mytitle {
         width: 100%;
-        height: 250px;
+        height: 300px;
 
         background-image: linear-gradient(
             0deg,
             rgba(0, 0, 0, 0.5),
             rgba(0, 0, 0, 0.5)
           ),
-          url("https://movie-phinf.pstatic.net/20210715_95/1626338192428gTnJl_JPEG/movie_image.jpg");
+          url("https://github.com/devDHB/minipj_intro/blob/master/templates/index_title_bg.jpg?raw=true");
         background-position: center;
         background-size: cover;
+        background-repeat: no-repeat;
 
         color: white;
 
@@ -102,14 +107,33 @@
         margin-right: 10px;
       }
 
+      .container {
+        margin-top: 130px;
+        margin-bottom: 130px;
+      }
+      /* 팀원 소개글 */
+      .intro-text {
+        margin-top: 100px;
+        font-size: 1.3vw;
+        text-align: center;
+        line-height: 2vw;
+      }
+
+      /*  object-fit 속성 IE 미지원  */
+      .card-image {
+        height: 200px;
+        margin: 0 auto;
+        object-fit: cover;
+      }
+
       /* 모달창 스타일 */
       .delete-modal {
         display: none;
-        width : 100%;
-        height : 100%;
-        background : rgba(0,0,0,0.5);
-        position : fixed;
-        z-index : 3;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        z-index: 3;
       }
       .form {
         background: white;
@@ -118,13 +142,12 @@
         position: fixed;
         top: 60%;
         left: 40%;
-      } 
+      }
+
       /* 모달창 열고닫기 */
       .show {
         display: block;
       }
-
-
     </style>
     <script>
       $(document).ready(function () {
@@ -139,20 +162,20 @@
             $("#cards-box").empty();
 
             rows.forEach((a) => {
-              // 데이터 바인딩 
+              // 데이터 바인딩
               console.log(a);
               let image = a["url"];
               let name = a["name"];
               let age = a["age"];
               let mbti = a["mbti"];
               let comment = a["comment"];
-              
-              let temp_html = `<div class="col">
+
+              let temp_html = `<div class="col-2">
                                   <div class="card h-100">
                                     <a href="${name}">
                                       <img
                                       src="${image}"
-                                      class="card-img-top"
+                                      class="card-img-top card-image"
                                       />
                                     </a>
                                     <div class="card-body">
@@ -193,8 +216,8 @@
         window.location.reload();
       }
 
-      // 삭제 모달창의 전송 버튼
-      function delete_btn(){
+      // 삭제 모달창의 전송 버튼누르면 실행
+      function delete_btn() {
         let delete_name = $("#delete_name").val();
 
         let formData = new FormData();
@@ -205,17 +228,16 @@
           .then((data) => {
             alert(data["msg"]);
           });
-          window.location.reload();
+        window.location.reload();
       }
-
 
       // 삭제-모달창 열기
-      function modal_open(){
-        $('.delete-modal').addClass('show');      
+      function modal_open() {
+        $(".delete-modal").addClass("show");
       }
       // 삭제-모달창 닫기
-      function modal_close(){
-        $('.delete-modal').removeClass('show');      
+      function modal_close() {
+        $(".delete-modal").removeClass("show");
       }
 
       function open_box() {
@@ -228,30 +250,33 @@
   </head>
 
   <body>
-
     <!-- 삭제 모달창 -->
     <div class="delete-modal">
       <div class="form">
         <div class="form-floating mb-3">
-            <p>삭제할 팀원 이름을 입력해주세요</p>
-            <input
-              id="delete_name"
-              type="text"
-              class="form-control"
-              placeholder="삭제할 팀원명"
-            />
-          </div>
-          <button onclick="delete_btn()" type="button" class="btn btn-primary">전송</button>
-          <button onclick="modal_close()" class="btn btn-danger">닫기</button>
+          <p>삭제할 팀원 이름을 입력해주세요</p>
+          <input
+            id="delete_name"
+            type="text"
+            class="form-control"
+            placeholder="삭제할 팀원명"
+          />
+        </div>
+        <button onclick="delete_btn()" type="button" class="btn btn-primary">
+          전송
+        </button>
+        <button onclick="modal_close()" class="btn btn-danger">닫기</button>
       </div>
-    </div> 
-      
+    </div>
 
     <div class="mytitle">
       <h1>7조를 소개합니다</h1>
       <button onclick="open_box()">팀원 추가하기</button>
     </div>
+
+    <!-- 팀원 추가하기 폼 -->
     <div class="mypost" id="post-box">
+      <!-- 이미지 URL -->
       <div class="form-floating mb-3">
         <input
           id="url"
@@ -261,18 +286,6 @@
         />
         <label>Image URL</label>
       </div>
-
-      <!-- <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">별점</label>
-        <select class="form-select" id="star">
-          <option selected>-- 선택하기 --</option>
-          <option value="1">⭐</option>
-          <option value="2">⭐⭐</option>
-          <option value="3">⭐⭐⭐</option>
-          <option value="4">⭐⭐⭐⭐</option>
-          <option value="5">⭐⭐⭐⭐⭐</option>
-        </select>
-      </div> -->
 
       <!-- 이름 -->
       <div class="form-floating mb-3">
@@ -336,83 +349,65 @@
       </div>
     </div>
 
-
-    <!-- 팀원 소개 -->
+    <!-- 팀 소개 -->
     <div class="container">
       <div class="row mt-md-5">
-        <div class="col-8">
-          <p class="card-text">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis
-            ipsam, quibusdam magni hic eum libero recusandae consequatur laborum
-            voluptatum fugiat tempora animi iste consectetur rem soluta ducimus
-            veritatis. Ad, ullam.
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis
-            ipsam, quibusdam magni hic eum libero recusandae consequatur laborum
-            voluptatum fugiat tempora animi iste consectetur rem soluta ducimus
-            veritatis. Ad, ullam.
-          </p>
-        </div>
         <div class="col-4">
           <img
-            src="http://placehold.it/400x300"
+            src="https://www.newstown.co.kr/news/photo/202105/493901_404707_2059.jpg"
             class="img-thumbnail"
             alt="..."
           />
+        </div>
+        <div class="col-8">
+          <p class="card-text intro-text">
+            저희 팀명은 '포기안할조' 입니다<br />
+            포기하지 말고 수료식에 다시 보자는 의미로 팀명을 정했습니다
+          </p>
         </div>
       </div>
+    </div>
     <div class="container">
       <div class="row mt-md-5">
+        <div class="col-8">
+          <p class="card-text intro-text">
+            아직 모르는 게 많지만 차근차근 스텝업해서 멋진 개발자가 될 수 있도록
+            노력하겠습니다
+          </p>
+        </div>
         <div class="col-4">
           <img
-            src="http://placehold.it/400x300"
+            src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMjZfMTU4/MDAxNTQ1NzgzNzg2ODA1.-a8iN8HRDRJAk0kgxBiwN9tUeQ34RHpbinonxnwP98og.IwCJ1wnNR8PT8JP__759kCPgTDcL5oTDT5sAPFKMeGkg.JPEG.ksjin0212/%EC%95%94%EB%B2%BD%EB%93%B1%EB%B0%98.jpg?type=w800"
             class="img-thumbnail"
             alt="..."
           />
         </div>
-        <div class="col-8">
-          <p class="card-text">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis
-            ipsam, quibusdam magni hic eum libero recusandae consequatur laborum
-            voluptatum fugiat tempora animi iste consectetur rem soluta ducimus
-            veritatis. Ad, ullam.
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis
-            ipsam, quibusdam magni hic eum libero recusandae consequatur laborum
-            voluptatum fugiat tempora animi iste consectetur rem soluta ducimus
-            veritatis. Ad, ullam.     
-          </p>
-        </div>        
       </div>
     </div>
 
-    <!-- card -->
-    <div class="mycards mt-5" style="margin-bottom: 50px;">
-      <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
-        <div class="col">
-          <div class="card h-100">
-            <img
-              src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-              class="card-img-top"
-            />
-            <div class="card-body">
-              <h5 class="card-title">영화 제목이 들어갑니다</h5>
-              <p class="card-text">여기에 영화에 대한 설명이 들어갑니다.</p>
-              <p>⭐⭐⭐</p>
-              <p class="mycomment">나의 한줄 평을 씁니다</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- 팀원 cardbox -->
+    <div class="mycards" style="margin-bottom: 100px">
+      <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box"></div>
       <!-- 삭제 모달창 열기 버튼 추가 -->
-      <button onclick="modal_open()" type="button" class="btn btn-danger" style="width:80px; margin-top:20px">삭제</button>
+      <button
+        onclick="modal_open()"
+        type="button"
+        class="btn btn-danger"
+        style="width: 80px; margin-top: 20px"
+      >
+        삭제
+      </button>
     </div>
 
     <script>
       // 검은 배경화면 클릭시 모달창 닫기
-      document.querySelector('.delete-modal').addEventListener('click', function(e){
-        if (e.target == document.querySelector('.delete-modal')) {
-          document.querySelector('.delete-modal').classList.remove('show');
-        }
-      })
+      document
+        .querySelector(".delete-modal")
+        .addEventListener("click", function (e) {
+          if (e.target == document.querySelector(".delete-modal")) {
+            document.querySelector(".delete-modal").classList.remove("show");
+          }
+        });
     </script>
   </body>
 </html>

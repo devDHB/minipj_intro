@@ -9,9 +9,6 @@ client = MongoClient(
 )
 db = client.dbsparta
 
-# import requests
-# from bs4 import BeautifulSoup
-
 
 @app.route("/")
 def home():
@@ -24,12 +21,6 @@ def doohyeon():
     return render_template("doohyeon.html")
 
 
-# 라우트 추가 - 장봉준
-@app.route("/장봉준")
-def bongjun():
-    return render_template("bongjun.html")
-
-
 @app.route("/member", methods=["POST"])
 def member_post():
     # 멤버 정보 받기
@@ -40,20 +31,7 @@ def member_post():
     comment_receive = request.form["comment_give"]
     intro_receive = request.form["intro_give"]
 
-    # headers = {
-    #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36"
-    # }
-    # data = requests.get(url_receive, headers=headers)
-    # soup = BeautifulSoup(data.text, "html.parser")
-
-    # ogtitle = soup.select_one("meta[property='og:title']")["content"]
-    # ogimage = soup.select_one("meta[property='og:image']")["content"]
-    # ogdesc = soup.select_one("meta[property='og:description']")["content"]
-
     doc = {
-        # "title": ogtitle,
-        # "desc": ogdesc,
-        # "image": ogimage,
         "url": url_receive,
         "name": name_receive,
         "age": age_receive,
@@ -70,14 +48,9 @@ def member_post():
 @app.route("/member", methods=["GET"])
 def member_get():
     all_members = list(db.members.find({}, {"_id": False}))
-    # doohyeon = list(db.members.find_one({"name": "방두현"}, {"_id": False}))
-    # doohyeon = db.members.find_one({"name": "방두현"})
-    # bongjun = db.members.find_one({"bongjun": "장봉준"})
     return jsonify(
         {
             "result": all_members,
-            # "doohyeon": doohyeon,
-            # "bongjun": bongjun,
         }
     )
 

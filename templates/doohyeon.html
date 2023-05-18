@@ -24,11 +24,16 @@
       href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+
     <title>개인소개 - 방두현</title>
 
     <style>
       * {
-        font-family: "Gowun Dodum", sans-serif;
+        font-family: "Jua", "Gowun Dodum", sans-serif;
       }
 
       .card {
@@ -43,10 +48,6 @@
 
       .background_top {
         height: 200px;
-        /* background-image: url('https://img.freepik.com/premium-photo/blue-sky-with-cloud-in-sunshine-day_45004-123.jpg');
-            background-position: center;
-            background-size: cover; */
-
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -58,9 +59,6 @@
         height: 100%;
         padding-top: 47.5px;
         padding-bottom: 47.5px;
-        /* background-image: url('https://cdn.imweb.me/upload/S202207202685e30f16e24/8b48c67f8cdf6.jpeg');
-            background-position: center;
-            background-size: cover; */
       }
 
       .bd_bg {
@@ -77,10 +75,8 @@
         align-items: start;
         justify-content: center;
         padding-top: 8px;
-        /* margin: 40px auto 20px auto; */
         margin-left: 7%;
         padding-left: 4%;
-
         border: 3px solid white;
         border-radius: 50px;
       }
@@ -110,16 +106,6 @@
         height: 90%;
         overflow-y: scroll;
       }
-      /* 
-        .gray_bg {
-            margin-left: 4%;
-            width: 50vw;
-            height: 80%;
-            opacity: 0.5;
-            background-color: gray;
-
-
-        } */
 
       .post_btn_wrap {
         margin-left: 65%;
@@ -233,21 +219,15 @@
           alt="No image"
         />
 
-        <!-- temp_html -->
-        <div class="intro_container"></div>
-        <!-- <div class="gray_bg" style="position: relative; z-index: 1">
-            </div> -->
+        <div class="intro_container">
+          <!-- temp_html -->
+        </div>
 
         <div class="card">
           <div class="cardborder" style="max-width: 17rem">
-            <!-- temp_html -->
-            <div class="card-header"><h3>태그</h3></div>
             <!-- card-header 하위태그로 데이터 바인딩 -->
-            <!-- <div class="card-body">
-              <p id="mbti">*MBTI</p>
-              <p id="blog_address">*블로그 주소블로그 주소블로그 주소</p>
-              <p id="one_comment">*한마디</p>
-            </div> -->
+            <div class="card-header"><h3>태그</h3></div>
+            <!-- temp_html2 -->
           </div>
         </div>
       </div>
@@ -259,13 +239,6 @@
         >
           수정
         </button>
-        <!-- <button
-          type="button"
-          onclick="delete_btn()"
-          class="btn btn-outline-danger"
-        >
-          삭제
-        </button> -->
       </div>
     </div>
 
@@ -274,9 +247,6 @@
       function update_btn() {
         let update_text = $("#update_text").val();
         let name = $("#name").text();
-
-        console.log(update_text);
-        console.log(name);
 
         let formData = new FormData();
         formData.append("update_text_give", update_text);
@@ -291,7 +261,7 @@
       }
 
       // 수정 모달창 Textarea 자동 높이 조절
-      const DEFAULT_HEIGHT = 30; // textarea 기본 height
+      const DEFAULT_HEIGHT = 30;
       const $update_text = document.querySelector("#update_text");
 
       $update_text.oninput = (e) => {
