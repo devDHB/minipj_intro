@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet" />
+    <title>김지혜</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet&family=Nanum+Myeongjo&family=Song+Myung&family=Sunflower:wght@500&display=swap');
+
+        * {
+            font-family: 'Hahmlet', serif;
+        }
+
+        #jb-container {
+            width: 1800px;
+            height: 900px;
+
+            margin: 20px auto auto auto;
+            padding: 20px;
+            border: 1px solid #bcbcbc;
+        }
+
+        #jb-header {
+            width: 100%;
+            height: 250px;
+            margin: 0px 0px 20px 0px;
+
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://media.fastcampus.co.kr/wp-content/uploads/2021/03/fastcampus-media-coding-img-1-1030x539.png');
+            background-position: center;
+            background-size: cover;
+
+            color: white;
+            font-size: 22px;
+            text-align: center;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #jb-sidebar-left {
+            width: 400px;
+            height: 400px;
+
+            padding: 20px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            float: left;
+            border: 1px solid #bcbcbc;
+
+            background-image: url('https://thumb.photo-ac.com/2f/2f9e110e84d5f9734292ca6854422804_t.jpeg');
+            background-position: center;
+            background-size: 150%;
+
+            color: white;
+            text-align: center;
+        }
+
+        #jb-content {
+            width: 1065px;
+            height: 400px;
+
+            padding: 20px;
+            margin-bottom: 20px;
+            float: left;
+            border: 1px solid #bcbcbc;
+        }
+
+        #jb-sidebar-right {
+            width: 250px;
+            height: 400px;
+
+            padding: 20px;
+            margin-bottom: 20px;
+            float: right;
+            border: 1px solid #bcbcbc;
+        }
+
+        #jb-footer {
+            clear: both;
+            padding: 20px;
+            margin: 0px 0px 10px 0px;
+            border: 1px solid #bcbcbc;
+
+            color: grey;
+        }
+
+        #left-text {
+            text-align: center;
+        }
+
+        #text {
+            color: black;
+        }
+
+        #intro_container {
+            border: 1px solid gray;
+            border-radius: 10px;
+            word-break: break-all;
+            width: 50%;
+            height: 90%;
+            overflow-y: scroll;
+        }
+    </style>
+
+</head>
+
+<body class="bd_bg">
+
+
+    </head>
+
+    <body>
+        <div id="jb-container">
+            <div id="jb-header">
+                <h1 class="title-text">김지혜</h1>
+                <h4>Node.js A반_7조</h4>
+            </div>
+
+            <div class="wrap">
+                <div id="jb-sidebar-left">
+                    <h2 class="left-text"></h2>
+                </div>
+                <div id="jb-content">
+
+                    <body class="bd_bg">
+                        <!-- 삭제 모달창 -->
+                        <div class="update-modal">
+                            <div class="form">
+                                <div class="form-floating mb-3">
+                                    <h3>소개글 수정</h3>
+                                    <textarea id="update_text" class="form-control" placeholder="수정할 내용"></textarea>
+                                </div>
+                                <button onclick="update_btn()" type="button" class="btn btn-primary">
+                                    전송
+                                </button>
+                                <button onclick="modal_close()" class="btn btn-danger">닫기</button>
+                                <!-- <div class="gray_bg" style="position: relative; z-index: 1">
+                            </div> -->
+                                <button type="button" onclick="modal_open()" class="btn btn-outline-success">
+                                    수정
+                                </button>
+                                <!-- <button
+                          type="button"
+                          onclick="delete_btn()"
+                          class="btn btn-outline-danger"
+                        >
+                          삭제
+                        </button> -->
+                            </div>
+                        </div>
+                        <div class="intro_container" id="intro_contain">
+                            <span style="font-weight: bold">
+                            </span>
+                        </div>
+                </div>
+
+                <script>
+                    // 수정 모달창 Textarea 자동 높이 조절
+                    const DEFAULT_HEIGHT = 30; // textarea 기본 height
+                    const $update_text = document.querySelector("#update_text");
+
+                    $update_text.oninput = (e) => {
+                        const $target = e.target;
+
+                        $target.style.height = 0;
+                        $target.style.height = DEFAULT_HEIGHT + $target.scrollHeight + "px";
+                    };
+
+                    // 검은 배경화면 클릭시 모달창 닫기
+                    document
+                        .querySelector(".update-modal")
+                        .addEventListener("click", function (e) {
+                            if (e.target == document.querySelector(".update-modal")) {
+                                document.querySelector(".update-modal").classList.remove("show");
+                            }
+                        });
+                </script>
+            </div>
+            <div id="jb-sidebar-right">
+                <h2>태그</h2>
+                <ul>
+                    <p>
+                        <li>
+                            <h4>MBTI</h4>
+                            <a style="color:grey"
+                                href="https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-intj">INTJ</a>
+                        </li>
+                    </p>
+                    <li>
+                        <p>
+                        <h4>한마디</h4>
+                        <p style="color:grey">아직 많이 부족하지만 차근차근 보완해나가는 모습을 보이고 싶습니다. 잘 부탁드립니다!</p>
+                    </li>
+                    </p>
+
+                </ul>
+            </div>
+            <div id="jb-footer">
+                <h3 style="color:black">
+                    출처
+                </h3>
+                <p>(레이아웃 참고: <a href="https://www.codingfactory.net/10530">https://www.codingfactory.net/10530</a>)</p>
+                <p>(이미지 참고: 구글)</p>
+            </div>
+        </div>
+        </div>
+    </body>
+
+</html>

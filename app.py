@@ -21,6 +21,30 @@ def doohyeon():
     return render_template("doohyeon.html")
 
 
+# 라우트 추가 - 장봉준
+@app.route("/장봉준")
+def bongjun():
+    return render_template("bongjun.html")
+
+
+# 라우트 추가 - 신정훈
+@app.route("/신정훈")
+def jeonghoon():
+    return render_template("jeonghoon.html")
+
+
+# 라우트 추가 - 김지혜
+@app.route("/김지혜")
+def jihye():
+    return render_template("jihye.html")
+
+
+# 라우트 추가 - 최하영
+@app.route("/최하영")
+def hayoung():
+    return render_template("hayoung.html")
+
+
 @app.route("/member", methods=["POST"])
 def member_post():
     # 멤버 정보 받기
@@ -60,6 +84,27 @@ def member_get():
 def doohyeon_get():
     doohyeon = list(db.members.find({"name": "방두현"}, {"_id": False}))
     return jsonify({"result": doohyeon})
+
+
+# 장봉준 데이터 불러오기
+@app.route("/bongjun", methods=["GET"])
+def bongjun_get():
+    bongjun = list(db.members.find({"name": "장봉준"}, {"_id": False}))
+    return jsonify({"result": bongjun})
+
+
+# 신정훈 데이터 불러오기
+@app.route("/jeonghoon", methods=["GET"])
+def jeonghoon_get():
+    jeonghoon = list(db.members.find({"name": "신정훈"}, {"_id": False}))
+    return jsonify({"result": jeonghoon})
+
+
+# 최하영 데이터 불러오기
+@app.route("/hayoung", methods=["GET"])
+def hayoung_get():
+    hayoung = list(db.members.find({"name": "최하영"}, {"_id": False}))
+    return jsonify({"result": hayoung})
 
 
 # 삭제 기능 추가

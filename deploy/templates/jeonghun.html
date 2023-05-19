@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
+      rel="stylesheet"
+    />
+    <title>개인소개화면 - 신정훈</title>
+
+    <style>
+      * {
+        font-family: "Gowun Dodum", sans-serif;
+      }
+
+      .modify_modal {
+        display: none;
+        width: 100vw;
+        height: 100vw;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+      }
+
+      .form {
+        width: 50%;
+        height: 30%;
+        background: white;
+
+        margin: 0px auto 0px auto;
+
+        display: flex;
+
+        flex-direction: column;
+        align-items: center;
+
+        justify-content: center;
+      }
+
+      .card {
+        margin-left: 2%;
+        min-width: 20vw;
+        min-height: 14vw;
+      }
+
+      .cardborder {
+        height: 100%;
+        word-break: break-all;
+        overflow-y: scroll;
+      }
+
+      .background_top {
+        height: 200px;
+        /* background-image: url('https://img.freepik.com/premium-photo/blue-sky-with-cloud-in-sunshine-day_45004-123.jpg');
+            background-position: center;
+            background-size: cover; */
+
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+      }
+
+      .make_bg {
+        width: 100%;
+        height: 100%;
+        padding-top: 47.5px;
+        padding-bottom: 47.5px;
+        /* background-image: url('https://cdn.imweb.me/upload/S202207202685e30f16e24/8b48c67f8cdf6.jpeg');
+            background-position: center;
+            background-size: cover; */
+      }
+
+      .bd_bg {
+        background-image: url("http://jjaltoon.gallery/wp-content/uploads/kboard_attached/4/201804/5ac5e8bd6d3ff5689127.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .title {
+        width: 40%;
+        height: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        padding-top: 8px;
+        /* margin: 40px auto 20px auto; */
+        margin-left: 7%;
+        padding-left: 4%;
+
+        border: 3px solid white;
+        border-radius: 50px;
+      }
+
+      .mainContents {
+        height: 450px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .img {
+        width: 20%;
+        image-rendering: crisp-edges;
+        margin-right: 2%;
+        border: 2px solid black;
+        border-radius: 5px;
+      }
+
+      .intro_container {
+        border: 1px solid gray;
+        border-radius: 10px;
+        word-break: break-all;
+        width: 50%;
+        height: 90%;
+        overflow-y: scroll;
+      }
+
+      /* 
+        .gray_bg {
+            margin-left: 4%;
+            width: 50vw;
+            height: 80%;
+            opacity: 0.5;
+            background-color: gray;
+
+
+        } */
+
+      .post_btn_wrap {
+        margin-left: 65%;
+      }
+    </style>
+
+    <script>
+      let name_global;
+      $(document).ready(function () {
+        show_top_name();
+      });
+
+      // name, image url, introduction, tag를 받아와서 출력
+      function show_top_name() {
+        fetch("/jeonghun")
+          .then((res) => res.json())
+          .then((data) => {
+            let rows = data["result"];
+            $("#team_title").empty();
+            $("#mainContent_id").empty();
+
+            rows.forEach((a) => {
+              let name = a["name"]; //이름
+              let url = a["url"]; //이미지
+              let intro = a["intro"]; // 소개글
+              let comment = a["comment"]; //한줄코멘트
+              let mbti = a["mbti"]; //mbti
+              name_global = name;
+              //타이틀에 이름 로딩
+              let temp_html = `<h1 id="name">${name}</h1>
+                                     <p>내일배움캠프 node.js A반 7조</p>`;
+
+              let mainContents_html = `<img class="img" id="image"
+                                            src="${url}"
+                                            
+                                            alt="No image">
+
+                                        <div class="intro_container" id="intro_contain"><span style="font-weight: bold;">
+                                                ${intro}
+                                            </span>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="cardborder" style="max-width: 17rem;">
+                                                <div class="card-header">태그</div>
+                                                <div class="card-body">
+                                                    <p id="mbti">${mbti}</p>
+                                                    <p id="one_comment">${comment}</p>
+                                                </div>
+                                            </div>
+                                        </div>`;
+
+              $("#mainContent_id").append(mainContents_html);
+              $("#team_title").append(temp_html);
+            });
+          });
+      }
+
+      // 수정 모달창 열기
+      function modify_open_btn() {
+        $(".modify_modal").show();
+      }
+      // 모달창 닫기
+      function close_modal() {
+        $(".modify_modal").hide();
+      }
+
+      //수정 전송 버튼
+      function modify() {
+        let modify_context = $("#modify_context_id").val();
+        let name = name_global;
+        let formData = new FormData();
+        formData.append("name_give", name);
+        formData.append("update_intro_give", modify_context);
+
+        fetch("/update_intro", { method: "PUT", body: formData })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data["msg"]);
+          });
+        window.location.reload();
+      }
+    </script>
+  </head>
+
+  <body class="bd_bg">
+    <div class="modify_modal">
+      <div class="form">
+        <div class="form-floating mb-3">
+          <p>수정할 내용을 입력해주세요</p>
+          <input
+            id="modify_context_id"
+            type="text"
+            class="form-control"
+            placeholder="소개글작성"
+            maxlength="90"
+          />
+        </div>
+        <button onclick="modify()" type="button" class="btn btn-primary">
+          수정
+        </button>
+        <button onclick="close_modal()" class="btn btn-danger">닫기</button>
+      </div>
+    </div>
+
+    <div class="background_top">
+      <div class="title" id="team_title">
+        <h1 id="name">팀원이름</h1>
+        <p>내일배움캠프 node.js A반 7조</p>
+      </div>
+    </div>
+    <div class="make_bg">
+      <div class="mainContents" id="mainContent_id">
+        <!-- <img class="img" id="image"
+                src="https://static.ebs.co.kr/images/public/lectures/2014/06/19/10/bhpImg/44deb98d-1c50-4073-9bd7-2c2c28d65f9e.jpg"
+                alt="No image">
+
+            <div class="intro_container" id="intro_contain"><span style="font-weight: bold;">
+                    asdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafsasdafs
+                </span>
+            </div>
+            
+
+
+            <div class="card">
+                <div class="cardborder" style="max-width: 17rem;">
+                    <div class="card-header">태그</div>
+                    <div class="card-body">
+                        <p id="mbti">*MBTI</p>
+                        <p id="one_comment">*한마디</p>
+                    </div>
+                </div>
+            </div> -->
+      </div>
+      <div class="post_btn_wrap">
+        <button
+          type="button"
+          onclick="modify_open_btn()"
+          class="btn btn-outline-success"
+        >
+          수정
+        </button>
+      </div>
+    </div>
+    <!-- 수정 -->
+  </body>
+</html>
